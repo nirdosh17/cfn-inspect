@@ -44,6 +44,16 @@ export async function validate(args) {
   // args contains array of arguments passed from CLI
   // https://docs.npmjs.com/files/package.json#bin
   let options = parseArgumentsIntoOptions(args)
+
+  if (options['--help']) {
+    console.log('Hi! Thank you for tryig out cfn-validate module.');
+    console.log('\nUsage:');
+    console.log('❯❯❯ cfn-validate --template <local yaml template path>');
+    console.log('\nExample:');
+    console.log('❯❯❯ cfn-validate --template /Users/username/lambda_cloudformation.yaml');
+    return;
+  }
+
   options = await promptForMissingOptions(options);
   cfValidate(options.template);
 }

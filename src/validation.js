@@ -3,11 +3,37 @@ import { yamlParse } from 'yaml-cfn';
 import Listr from 'listr';
 import chalk from 'chalk';
 
+// TODO: read this from consumer project root directory or supply config file url(local or remote)
+const config = require('../cfn-validate.config.sample.json');
+
 // validate parameters
 // check for naming conventions
 // validate resource properties
 // validate tags
 // validate outputs
+
+function tagKeys(tagsArray){
+  let tagKeys = [];
+  tagsArray.forEach(tag => {
+    tagKeys.push(tag.Key);
+  });
+  return tagKeys;
+}
+
+function missingTags(presentTags) {
+  // even tag might be missing
+  const requiredTags = config.tags.required || [];
+  const missing = requiredTags.slice();
+
+  presentTags.forEach(tag => {
+    let delIndex = missing.indexOf(tag)
+    if (delIndex !== -1) {
+      missing.splice(delIndex, 1);
+    }
+  });
+
+  return missing;
+}
 
 async function validateParameters(parameters) {
   // return Promise.reject(new Error("Failed to validate 'Parameters'"));
@@ -15,7 +41,18 @@ async function validateParameters(parameters) {
 }
 
 async function validateResources(resources) {
-  // return Promise.reject(new Error("Failed to validate 'Resources'"));
+  // TODO: use Listr here
+  for(var resourceId in resources) {
+    const resource = resources[resourceId];
+    const properties = resource.Properties;
+    const tags = properties.Tags;
+    const presentTags = tagKeys(tags);
+    const mTags = missingTags(presentTags);
+    if (mTags.length > 0) {
+      return Promise.reject(new Error(`Missing required tags '${mTags.join(', ')}' in the resource '${resourceId}'`));
+    }
+  }
+
   return true
 }
 
@@ -35,7 +72,7 @@ export async function cfValidate(templatePath) {
         task: () => validateParameters(parsedYaml.Parameters),
       },
       {
-        title: 'Validate Resources',
+        title: 'Validate Resources and Tags',
         task: () => validateResources(parsedYaml.Resources),
       },
       {
