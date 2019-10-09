@@ -1,11 +1,11 @@
 {
-  "name": "@nirdoshgautam/cfn-validator",
+  "name": "@nirdoshgautam/cfn-validate",
   "version": "1.0.0",
-  "description": "Validates AWS CloudFormation templates against custom rules",
+  "description": "Validates AWS CloudFormation template against custom rules",
   "main": "src/index.js",
   "bin": {
-    "@nirdoshgautam/cfn-validator": "bin/cfn-validator",
-    "cfn-validator": "bin/cfn-validator"
+    "@nirdoshgautam/cfn-validate": "bin/cfn-validate",
+    "cfn-validate": "bin/cfn-validate"
   },
   "publishConfig": {
     "access": "public"
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nirdosh17/cfn-validator.git"
+    "url": "git+https://github.com/nirdosh17/cfn-validate.git"
   },
   "keywords": [
     "cloudformation",
@@ -28,10 +28,13 @@
   "author": "Nirdosh Gautam <nrdshgtm@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nirdosh17/cfn-validator/issues"
+    "url": "https://github.com/nirdosh17/cfn-validate/issues"
   },
-  "homepage": "https://github.com/nirdosh17/cfn-validator#readme",
+  "homepage": "https://github.com/nirdosh17/cfn-validate#readme",
   "dependencies": {
-    "esm": "^3.2.25"
+    "arg": "^4.1.1",
+    "esm": "^3.2.25",
+    "inquirer": "^7.0.0",
+    "yaml-cfn": "^0.2.3"
   }
 }
