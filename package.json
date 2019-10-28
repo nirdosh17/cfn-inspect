@@ -1,11 +1,10 @@
 {
-  "name": "@nirdoshgautam/cfn-validate",
+  "name": "cfn-inspect",
   "version": "1.0.0",
   "description": "Validates AWS CloudFormation template against custom rules",
   "main": "src/index.js",
   "bin": {
-    "@nirdoshgautam/cfn-validate": "bin/cfn-validate",
-    "cfn-validate": "bin/cfn-validate"
+    "cfn-inspect": "bin/cfn-inspect"
   },
   "publishConfig": {
     "access": "public"
@@ -37,6 +36,7 @@
     "esm": "^3.2.25",
     "inquirer": "^7.0.0",
     "listr": "^0.14.3",
+    "rc": "^1.2.8",
     "yaml-cfn": "^0.2.3"
   }
 }

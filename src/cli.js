@@ -1,5 +1,6 @@
 import arg from 'arg';
 import inquirer from 'inquirer';
+import chalk from 'chalk';
 
 import { cfValidate } from './validation';
 
@@ -9,16 +10,19 @@ function parseArgumentsIntoOptions(rawArgs){
       // Types
       '--help': Boolean,
       '--template': String, // CloudFormation template file path
+      '--config': String,
 
       // Aliases
       '-h': '--help',
-      '-t': '--template'
+      '-t': '--template',
+      '-c': '--config'
     }
   );
 
   return {
     '--help': args['--help'] || false,
-    template: args['--template']
+    template: args['--template'],
+    config: args['--config']
   }
 }
 
@@ -28,7 +32,7 @@ async function promptForMissingOptions(options) {
     questions.push({
       type: 'input',
       name: 'template',
-      message: 'Please enter CloudFormation template file path:'
+      message: 'Please enter CloudFormation template file path(e.g. ~/Lambda/cfn.yaml):'
     })
   }
 
@@ -46,11 +50,11 @@ export async function validate(args) {
   let options = parseArgumentsIntoOptions(args)
 
   if (options['--help']) {
-    console.log('Hi! Thank you for tryig out cfn-validate module.');
-    console.log('\nUsage:');
-    console.log('❯❯❯ cfn-validate --template <local yaml template path>');
-    console.log('\nExample:');
-    console.log('❯❯❯ cfn-validate --template /Users/username/lambda_cloudformation.yaml');
+    console.log(`Thank you for trying out ${chalk.italic.yellow('cfn-validate')} package.`);
+    console.log(chalk.blueBright('\nUsage:'));
+    console.log(chalk.redBright('  ❯❯❯'), 'cfn-validate --template ', chalk.italic('<local-cfn-template-file-path>'));
+    console.log(chalk.blueBright('\nExample:'));
+    console.log(chalk.redBright('  ❯❯❯'), 'cfn-validate --template /Users/username/lambda_cloudformation.yaml');
     return;
   }
 

@@ -2,14 +2,15 @@ import fs from 'fs';
 import { yamlParse } from 'yaml-cfn';
 import Listr from 'listr';
 import chalk from 'chalk';
+import rc from 'rc';
 
-// TODO: read this from consumer project root directory or supply config file url(local or remote)
-const config = require('../cfn-validate.config.sample.json');
+const packageName = require('../package.json').name;
+const config = rc(packageName);
 
 // validate parameters
 // check for naming conventions
 // validate resource properties
-// validate tags
+// check if requied tags are present
 // validate outputs
 
 function tagKeys(tagsArray){
@@ -21,18 +22,23 @@ function tagKeys(tagsArray){
 }
 
 function missingTags(presentTags) {
-  // even tag might be missing
-  const requiredTags = config.tags.required || [];
-  const missing = requiredTags.slice();
+  // even 'tag' key might be missing
+  if (config.tags) {
+    const requiredTags = config.tags.required || [];
+    const missing = requiredTags.slice();
 
-  presentTags.forEach(tag => {
-    let delIndex = missing.indexOf(tag)
-    if (delIndex !== -1) {
-      missing.splice(delIndex, 1);
-    }
-  });
+    presentTags.forEach(tag => {
+      let delIndex = missing.indexOf(tag)
+      if (delIndex !== -1) {
+        missing.splice(delIndex, 1);
+      }
+    });
 
-  return missing;
+    return missing;
+  } else {
+    console.log('[WARN] No rules found for tags!');
+    return [];
+  }
 }
 
 async function validateParameters(parameters) {
@@ -65,20 +71,20 @@ export async function cfValidate(templatePath) {
   try {
     const yamlString = fs.readFileSync(templatePath, 'utf8').toString();
     const parsedYaml = yamlParse(yamlString);
-    
+
     const tasks = new Listr([
+      // {
+      //   title: 'Validate Parameters',
+      //   task: () => validateParameters(parsedYaml.Parameters),
+      // },
       {
-        title: 'Validate Parameters',
-        task: () => validateParameters(parsedYaml.Parameters),
-      },
-      {
-        title: 'Validate Resources and Tags',
+        title: 'Validate Tags',
         task: () => validateResources(parsedYaml.Resources),
       },
-      {
-        title: 'Validate Outputs',
-        task: () => validateOutputs(parsedYaml.Outputs),
-      }
+      // {
+      //   title: 'Validate Outputs',
+      //   task: () => validateOutputs(parsedYaml.Outputs),
+      // }
     ]);
 
     await tasks.run();
@@ -86,5 +92,5 @@ export async function cfValidate(templatePath) {
   } catch (err) {
     console.error(chalk.red('Validation failed!\n ', err));
     process.exit(1);
-  }  
+  }
 }
