@@ -1,0 +1,42 @@
+{
+  "name": "cfn-inspect",
+  "version": "1.0.0",
+  "description": "Validates AWS CloudFormation template against custom rules",
+  "main": "src/index.js",
+  "bin": {
+    "cfn-inspect": "bin/cfn-inspect"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nirdosh17/cfn-validate.git"
+  },
+  "keywords": [
+    "cloudformation",
+    "cfn",
+    "aws",
+    "cli",
+    "validator",
+    "yaml"
+  ],
+  "author": "Nirdosh Gautam <nrdshgtm@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nirdosh17/cfn-validate/issues"
+  },
+  "homepage": "https://github.com/nirdosh17/cfn-validate#readme",
+  "dependencies": {
+    "arg": "^4.1.1",
+    "chalk": "^2.4.2",
+    "esm": "^3.2.25",
+    "inquirer": "^7.0.0",
+    "listr": "^0.14.3",
+    "rc": "^1.2.8",
+    "yaml-cfn": "^0.2.3"
+  }
+}
