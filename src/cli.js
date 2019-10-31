@@ -50,11 +50,11 @@ export async function validate(args) {
   let options = parseArgumentsIntoOptions(args)
 
   if (options['--help']) {
-    console.log(`Thank you for trying out ${chalk.italic.yellow('cfn-validate')} package.`);
+    console.log(`Thank you for trying out ${chalk.italic.yellow('cfn-inspect')} package.`);
     console.log(chalk.blueBright('\nUsage:'));
-    console.log(chalk.redBright('  ❯❯❯'), 'cfn-validate --template ', chalk.italic('<local-cfn-template-file-path>'));
+    console.log(chalk.redBright('  ❯❯❯'), 'cfn-inspect --template ', chalk.italic('<local-cfn-template-file-path>'));
     console.log(chalk.blueBright('\nExample:'));
-    console.log(chalk.redBright('  ❯❯❯'), 'cfn-validate --template /Users/username/lambda_cloudformation.yaml');
+    console.log(chalk.redBright('  ❯❯❯'), 'cfn-inspect --template ~/lambda/iac.yaml');
     return;
   }
 
