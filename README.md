@@ -1,7 +1,5 @@
 # cfn-inspect
-A simple nodejs based CLI to validate AWS CloudFormation templates.
-
-The idea behind this tool is to check CloudFormation templates to ensure that it contains all the required attributes and comply with your organization's standards and policies for Infrastructure As Code(IAC).
+The motive behind this nodejs based CLI tool is to check CloudFormation templates to ensure that it contains all the required attributes and comply with your organization's standards and policies for IAC.
 
 ## Features
 - Enforce the presense of specific tags in the Resources
@@ -12,11 +10,7 @@ npm install cfn-inspect
 ```
 
 ## Configuration
-We can pass configuration in one of the following ways:
-- 1. Setup `.cfn-inspectrc` file in home directory.
-- 2. Pass config JSON file path using `--config ~/config.json`
-
-Sample config:
+To validate the template, we need to define the rules first. The rules are defined in JSON which looks like below:
 ```json
 {
   "tags": {
@@ -25,10 +19,17 @@ Sample config:
 }
 ```
 
+Finally we need to use the config while running the command. There are two ways to do that:
+- Create a file with name `.cfn-inspectrc` in home directory and add JSON config there. The command will pick up config from the rc file by default if no config argument is passed.
+
+  -- OR --
+
+- Create a config file wherever you like and pass the file path like this `--config ~/config.json`. Priority is given to `--config` argument over `.cfn-inspectrc` file.
+
 ## Usage
 **Usage:**
 ```
-  ❯❯❯ cfn-inspect --template <local-cfn-template-file-path>
+  ❯❯❯ cfn-inspect --template <cfn-template-file-path>
 ```
 
 **Example:**
