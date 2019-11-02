@@ -32,7 +32,7 @@ async function promptForMissingOptions(options) {
     questions.push({
       type: 'input',
       name: 'template',
-      message: 'Please enter CloudFormation template file path(e.g. ~/Lambda/cfn.yaml):'
+      message: 'Please enter CFN template file path(e.g. /Users/john/project/cfn.yaml):'
     })
   }
 
@@ -49,12 +49,14 @@ export async function validate(args) {
   // https://docs.npmjs.com/files/package.json#bin
   let options = parseArgumentsIntoOptions(args)
 
-  if (options['--help']) {
-    console.log(`Thank you for trying out ${chalk.italic.yellow('cfn-inspect')} package.`);
-    console.log(chalk.blueBright('\nUsage:'));
+  if (options['--help'] || (!options.template && !options.config)) {
+    console.log(`Thank you for trying out ${chalk.italic.yellow('cfn-inspect')} package!`);
+    console.log(chalk.blue('\nUsage:'));
     console.log(chalk.redBright('  ❯❯❯'), 'cfn-inspect --template ', chalk.italic('<local-cfn-template-file-path>'));
-    console.log(chalk.blueBright('\nExample:'));
+    console.log(chalk.blue('\nExample 1 (config set in ~/.cfn-inspectrc file):'));
     console.log(chalk.redBright('  ❯❯❯'), 'cfn-inspect --template ~/lambda/iac.yaml');
+    console.log(chalk.blue('\nExample 2 (config passed as parameter):'));
+    console.log(chalk.redBright('  ❯❯❯'), 'cfn-inspect --template ~/lambda/iac.yaml --config ~/validation_config.yaml');
     return;
   }
 

@@ -7,6 +7,8 @@ import rc from 'rc';
 const packageName = require('../package.json').name;
 const config = rc(packageName);
 
+// TODO
+// error accumulation
 // validate parameters
 // check for naming conventions
 // validate resource properties
@@ -72,6 +74,10 @@ export async function cfValidate(templatePath) {
     const yamlString = fs.readFileSync(templatePath, 'utf8').toString();
     const parsedYaml = yamlParse(yamlString);
 
+    // TODO
+    // Listr for parameter section
+    // Listr for Resources section for each resources
+    // Listr for output section
     const tasks = new Listr([
       // {
       //   title: 'Validate Parameters',
