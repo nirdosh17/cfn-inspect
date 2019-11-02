@@ -1,6 +1,6 @@
 {
   "name": "cfn-inspect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Validates AWS CloudFormation template against custom rules",
   "main": "src/index.js",
   "bin": {
