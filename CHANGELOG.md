@@ -10,3 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2019-10-28
 ### Added
 - Add first working version with functionality to check tags.
+
+## [1.0.1] - 2019-11-02
+### Fixed
+- Fixed examples in help command
